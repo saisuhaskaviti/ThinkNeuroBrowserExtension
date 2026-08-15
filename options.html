@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pause Point Settings</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-color: var(--surface); color: var(--on-surface);" class="font-sans min-h-screen">
+  
+  <div class="max-w-2xl mx-auto py-12 px-6">
+
+    <!-- Header -->
+    <header class="mb-10">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="w-10 h-10 rounded-2xl flex items-center justify-center" style="background-color: var(--primary);">
+          <svg width="20" height="20" viewBox="0 0 24 24" style="color: var(--on-primary);">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
+          </svg>
+        </div>
+        <h1 class="text-2xl font-semibold tracking-tight" style="color: var(--on-surface);">Pause Point</h1>
+      </div>
+      <p style="color: var(--on-surface-variant);" class="text-sm ml-13">Settings & Preferences</p>
+    </header>
+
+    <!-- Card -->
+    <div class="rounded-[28px] p-6 md:p-8 space-y-8" style="background-color: var(--surface-container);">
+
+      <!-- ── BLACKLIST ── -->
+      <section>
+        <h2 class="text-xs font-semibold uppercase tracking-widest mb-4" style="color: var(--on-surface-variant);">Paused Sites</h2>
+        <div class="flex gap-2 mb-4">
+          <input type="text" id="new-domain"
+                 class="flex-1 rounded-2xl px-5 py-3 text-sm focus:outline-none focus:ring-2 border-none"
+                 style="background-color: var(--surface-container-high); color: var(--on-surface); --tw-ring-color: var(--secondary);"
+                 placeholder="Add domain — e.g. reddit.com">
+          <button id="add-btn"
+                  class="px-6 py-3 rounded-2xl text-sm font-semibold transition-all hover:brightness-110 active:scale-95"
+                  style="background-color: var(--secondary); color: var(--on-secondary);">
+            Add
+          </button>
+        </div>
+        <p id="error-msg" class="text-sm font-medium mb-3 hidden" style="color: var(--secondary);">Error</p>
+        <ul id="blacklist-container" class="space-y-2">
+          <li id="empty-state" class="text-sm italic px-2 py-4" style="color: var(--on-surface-variant);">Loading...</li>
+        </ul>
+      </section>
+
+      <div class="border-t" style="border-color: var(--surface-container-high);"></div>
+
+      <!-- ── ESCAPE URL ── -->
+      <section>
+        <h2 class="text-xs font-semibold uppercase tracking-widest mb-1" style="color: var(--on-surface-variant);">Escape URL</h2>
+        <p class="text-xs mb-4" style="color: var(--on-surface-variant);">Where "Don't open" redirects you.</p>
+        <div class="flex gap-2">
+          <input type="text" id="escape-url"
+                 class="flex-1 rounded-2xl px-5 py-3 text-sm focus:outline-none focus:ring-2 border-none"
+                 style="background-color: var(--surface-container-high); color: var(--on-surface); --tw-ring-color: var(--secondary);"
+                 placeholder="https://google.com">
+          <button id="save-url-btn"
+                  class="px-6 py-3 rounded-2xl text-sm font-semibold transition-all hover:brightness-110 active:scale-95"
+                  style="background-color: var(--surface-container-high); color: var(--on-surface);">
+            Save
+          </button>
+        </div>
+        <p id="url-msg" class="text-xs font-medium mt-2 hidden" style="color: var(--secondary);">✓ Saved!</p>
+      </section>
+
+      <div class="border-t" style="border-color: var(--surface-container-high);"></div>
+
+      <!-- ── THEME CHOOSER ── -->
+      <section>
+        <h2 class="text-xs font-semibold uppercase tracking-widest mb-1" style="color: var(--on-surface-variant);">Theme Color</h2>
+        <p class="text-xs mb-5" style="color: var(--on-surface-variant);">Choose your Material You accent.</p>
+        <div class="flex gap-4 items-center" id="theme-chooser">
+          <button class="w-11 h-11 rounded-full transition-transform hover:scale-110 active:scale-95 shadow focus:outline-none ring-offset-2 ring-offset-surface" 
+                  style="background-color: #C8E158;" data-theme="lime" title="Lime"></button>
+          <button class="w-11 h-11 rounded-full transition-transform hover:scale-110 active:scale-95 shadow focus:outline-none ring-offset-2 ring-offset-surface" 
+                  style="background-color: #B5C0FF;" data-theme="periwinkle" title="Periwinkle"></button>
+          <button class="w-11 h-11 rounded-full transition-transform hover:scale-110 active:scale-95 shadow focus:outline-none ring-offset-2 ring-offset-surface" 
+                  style="background-color: #FFB3AC;" data-theme="rose" title="Rose"></button>
+          <button class="w-11 h-11 rounded-full transition-transform hover:scale-110 active:scale-95 shadow focus:outline-none ring-offset-2 ring-offset-surface" 
+                  style="background-color: #8EDBA4;" data-theme="mint" title="Mint"></button>
+        </div>
+        <p id="theme-saved-msg" class="text-xs font-medium mt-3 hidden" style="color: var(--secondary);">✓ Theme applied!</p>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
