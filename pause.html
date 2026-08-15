@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,64 +9,117 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body style="background-color: var(--surface); color: var(--on-surface);" class="h-screen w-screen font-sans overflow-hidden select-none">
+<body style="background-color: var(--surface); color: var(--on-surface);"
+  class="min-h-screen w-full font-sans overflow-y-auto select-none">
 
-  <!-- Full-page layout: top bar | center blob | bottom sheet -->
-  <div class="h-full flex flex-col items-center justify-between px-6 py-10">
+  <!-- Scrollable container with vertical auto-layout -->
+  <div class="min-h-screen w-full max-w-md mx-auto flex flex-col items-center justify-between px-6 py-8 gap-6">
 
-    <!-- ── TOP STATUS PILL ── -->
-    <div class="flex flex-col items-center gap-3 w-full">
-      <div style="background-color: var(--surface-container);" class="px-5 py-2 rounded-full flex items-center gap-2.5 shadow-sm">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="color: var(--secondary);">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
-        </svg>
-        <span id="domain-label" style="color: var(--on-surface-variant);" class="text-sm font-medium domain-chip">Pause Point</span>
+    <!-- ── TOP STATUS PILL & HEADER ── -->
+    <div class="flex flex-col items-center gap-3 w-full text-center shrink-0">
+      <div style="background-color: var(--surface-container);"
+        class="px-5 py-2 rounded-full flex items-center gap-2.5 shadow-sm">
+        <span class="w-3 h-3 rounded-full inline-block" style="background-color: var(--primary);"></span>
+        <span id="domain-label" style="color: var(--on-surface-variant);" class="text-sm font-medium">Pause Point</span>
       </div>
-      <h1 style="color: var(--on-surface);" class="text-3xl font-medium tracking-tight mt-1">Why am I here?</h1>
+      <h1 id="page-title" style="color: var(--on-surface);" class="text-3xl font-semibold tracking-tight mt-1">Why am I
+        here?</h1>
     </div>
 
     <!-- ── CENTER BREATHING BLOB ── -->
-    <div class="flex flex-col items-center gap-6 flex-1 justify-center">
-      <!-- Blob container — fixed size so animation stays inside -->
-      <div class="relative w-56 h-56 flex items-center justify-center">
-        <!-- Glow layer (behind blob) -->
-        <div class="breathing-blob blob-glow absolute w-56 h-56"
-             style="background-color: var(--primary); border-radius: 62% 38% 46% 54% / 60% 44% 56% 40%;"></div>
-        <!-- Text inside blob -->
-        <span id="breathing-text"
-              style="color: var(--on-primary);"
-              class="relative z-10 text-xl font-semibold tracking-wide transition-opacity duration-300 ease-in-out">
+    <div class="flex flex-col items-center gap-4 shrink-0 my-2">
+      <div class="relative w-48 h-48 flex items-center justify-center">
+        <div class="breathing-blob blob-glow absolute w-48 h-48"
+          style="background-color: var(--primary); border-radius: 62% 38% 46% 54% / 60% 44% 56% 40%;"></div>
+        <span id="breathing-text" style="color: var(--on-primary);"
+          class="relative z-10 text-xl font-semibold tracking-wide transition-opacity duration-300 ease-in-out">
           Breathe in
         </span>
       </div>
 
-      <!-- Countdown text below blob -->
-      <p style="color: var(--on-surface-variant);" class="text-sm font-medium">
+      <p style="color: var(--on-surface-variant);" class="text-sm font-medium mt-1" id="countdown-line">
         Opening in <span id="countdown" style="color: var(--secondary);" class="font-bold">10</span>s
       </p>
     </div>
 
-    <!-- ── BOTTOM ACTIONS ── -->
-    <div class="flex flex-col items-center w-full max-w-xs gap-3">
+    <!-- ── PHYSICAL MICRO-TASK PROMPT ── -->
+    <div id="microtask-card"
+      class="w-full max-w-xs px-5 py-3 rounded-2xl flex items-center justify-center text-center shadow-sm shrink-0 transition-all duration-500"
+      style="background-color: var(--surface-container-high);">
+      <span id="microtask-text" class="text-xs font-semibold leading-relaxed transition-opacity duration-500"
+        style="color: var(--on-surface);">
+        💧 Drink a sip of water
+      </span>
+    </div>
 
-      <!-- Primary Escape Button -->
-      <button id="escape-btn"
-              style="background-color: var(--secondary); color: var(--on-secondary);"
-              class="w-full py-4 rounded-[28px] text-base font-semibold tracking-wide shadow-md hover:brightness-110 active:scale-95 transition-all">
+    <!-- ── TIMED ACCESS CHIPS & CUSTOM TIMER ── -->
+    <div id="timer-options" class="w-full mb-2 hidden shrink-0">
+      <p class="text-xs font-semibold uppercase tracking-widest text-center mb-3"
+        style="color: var(--on-surface-variant);">Set a time limit</p>
+      <div class="flex justify-center gap-2 mb-3">
+        <button
+          class="timer-chip px-4 py-2 rounded-full text-xs font-semibold transition-all hover:brightness-110 active:scale-95 shadow-sm"
+          style="background-color: var(--secondary-container); color: var(--on-secondary-container);" data-minutes="5">5
+          min</button>
+        <button
+          class="timer-chip px-4 py-2 rounded-full text-xs font-semibold transition-all hover:brightness-110 active:scale-95 shadow-sm"
+          style="background-color: var(--secondary-container); color: var(--on-secondary-container);"
+          data-minutes="15">15 min</button>
+        <button
+          class="timer-chip px-4 py-2 rounded-full text-xs font-semibold transition-all hover:brightness-110 active:scale-95 shadow-sm"
+          style="background-color: var(--secondary-container); color: var(--on-secondary-container);"
+          data-minutes="30">30 min</button>
+      </div>
+      <!-- Custom Timer Input -->
+      <div class="flex gap-2 items-center justify-center max-w-xs mx-auto">
+        <input type="number" id="custom-minutes-input" min="1" max="1440" placeholder="Custom mins..."
+          class="w-32 px-3 py-1.5 text-xs rounded-full text-center border-none focus:outline-none focus:ring-2 shadow-sm"
+          style="background-color: var(--surface-container-high); color: var(--on-surface); --tw-ring-color: var(--secondary);">
+        <button id="custom-timer-btn"
+          class="px-4 py-1.5 rounded-full text-xs font-semibold transition-all hover:brightness-110 shadow-sm"
+          style="background-color: var(--secondary); color: var(--on-secondary);">Start</button>
+      </div>
+    </div>
+
+    <!-- ── HISTORY / TAB RECOMMENDATIONS ── -->
+    <div id="recommendations" class="w-full mb-2 hidden shrink-0">
+      <p class="text-xs font-semibold uppercase tracking-widest text-center mb-3"
+        style="color: var(--on-surface-variant);">Why not focus elsewhere?</p>
+      <div id="reco-list" class="flex flex-col gap-2 max-h-52 overflow-y-auto pr-1">
+        <!-- Dynamically injected -->
+      </div>
+    </div>
+
+    <!-- ── BOTTOM ACTIONS ── -->
+    <div class="flex flex-col items-center w-full max-w-xs gap-3 shrink-0 mt-auto pt-2">
+      <button id="escape-btn" style="background-color: var(--secondary); color: var(--on-secondary);"
+        class="w-full py-4 rounded-[28px] text-base font-semibold tracking-wide shadow-md hover:brightness-110 active:scale-95 transition-all">
         Don't open
       </button>
-
-      <!-- Continue button — plain text, unlocks after 10s -->
-      <button id="continue-btn"
-              style="color: var(--secondary);"
-              class="w-full py-3 rounded-2xl text-sm font-medium opacity-40 cursor-not-allowed transition-opacity"
-              disabled>
+      <button id="continue-btn" style="color: var(--secondary);"
+        class="w-full py-3 rounded-2xl text-sm font-medium opacity-40 cursor-not-allowed transition-all" disabled>
         Open site anyway
       </button>
+    </div>
+  </div>
 
+  <!-- ── ESCAPE CHOICE MODAL ── -->
+  <div id="escape-modal"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden p-4">
+    <div class="w-full max-w-sm p-6 rounded-[28px] shadow-2xl flex flex-col gap-4"
+      style="background-color: var(--surface-container);">
+      <h3 class="text-lg font-semibold text-center" style="color: var(--on-surface);">Where to next?</h3>
+      <p class="text-xs text-center -mt-2" style="color: var(--on-surface-variant);">Choose a destination to pivot your
+        focus.</p>
+      <div id="escape-choices-list" class="flex flex-col gap-2 max-h-60 overflow-y-auto">
+        <!-- Injected via JS -->
+      </div>
+      <button id="close-escape-modal" class="w-full py-2.5 rounded-full text-xs font-semibold mt-1"
+        style="background-color: var(--surface-container-high); color: var(--on-surface);">Cancel</button>
     </div>
   </div>
 
   <script src="pause.js"></script>
 </body>
+
 </html>

@@ -1,13 +1,15 @@
 {
   "manifest_version": 3,
   "name": "Pause Point",
-  "version": "1.0.0",
-  "description": "Combats mindless scrolling by introducing intentional friction rather than a hard block.",
+  "version": "2.0.0",
+  "description": "Combat mindless scrolling with intentional friction — inspired by Android 17 Pause Point.",
   "permissions": [
     "storage",
     "webNavigation",
     "tabs",
-    "activeTab"
+    "activeTab",
+    "history",
+    "alarms"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -20,7 +22,30 @@
     "open_in_tab": true
   },
   "action": {
-    "default_title": "Pause Point Settings",
-    "default_popup": "popup.html"
-  }
+    "default_title": "Pause Point",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16":  "icon16.png",
+      "48":  "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16":  "icon16.png",
+    "48":  "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["timer-overlay.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["pause.html", "styles.css", "theme.js", "pause.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

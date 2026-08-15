@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   let isBlacklisted = false;
   let blacklist = [];
 
+  // ── Settings (Setup immediately so it works even if url check returns early) ──
+  settingsBtn.addEventListener('click', () => chrome.runtime.openOptionsPage());
+
   // ── Get current tab domain ──
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
   if (tabs.length > 0 && tabs[0].url) {
@@ -18,24 +21,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         domainEl.textContent = currentDomain;
       } else {
         domainEl.textContent = 'Not a web page';
+        toggleBtn.disabled = true;
+        toggleText.textContent = 'Unavailable';
         return;
       }
     } catch {
       domainEl.textContent = 'Invalid URL';
+      toggleBtn.disabled = true;
+      toggleText.textContent = 'Unavailable';
       return;
     }
   }
 
-  // ── Load blacklist ──
-  const storage = await chrome.storage.local.get(['blacklist']);
+  const activeTabId = tabs.length > 0 ? tabs[0].id : null;
+
+  // ── Load storage & check active tab timer & stats ──
+  const storage = await chrome.storage.local.get(['blacklist', 'tabBypasses', 'stats']);
   blacklist = storage.blacklist || [];
+  const tabBypasses = storage.tabBypasses || {};
+  const stats = storage.stats || { triggers: 0, rescued: 0 };
+
+  const rescuedBadge = document.getElementById('popup-rescued-badge');
+  if (rescuedBadge) {
+    rescuedBadge.textContent = `${stats.rescued || 0} Rescued`;
+  }
 
   const updateUI = () => {
     isBlacklisted = blacklist.some(d => currentDomain.includes(d));
     toggleBtn.disabled = false;
 
+    // Check if active tab has a session timer
+    const entry = activeTabId ? tabBypasses[activeTabId] : null;
+    let timerText = '';
+
+    if (entry && entry.expiry && Date.now() < entry.expiry) {
+      const minsLeft = Math.ceil((entry.expiry - Date.now()) / 60000);
+      timerText = ` (${minsLeft}m left)`;
+    }
+
     if (isBlacklisted) {
-      toggleText.textContent = '✓ On Pause List — Remove';
+      toggleText.textContent = `✓ On Pause List${timerText} — Remove`;
       toggleBtn.style.backgroundColor = 'var(--surface-container-high)';
       toggleBtn.style.color           = 'var(--on-surface)';
     } else {
@@ -59,6 +84,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateUI();
   });
 
-  // ── Settings ──
-  settingsBtn.addEventListener('click', () => chrome.runtime.openOptionsPage());
+  // Event listeners are set up above
 });

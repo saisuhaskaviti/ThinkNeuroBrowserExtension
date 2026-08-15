@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <rect width="128" height="128" rx="28" fill="#F7F9EF"/>
+  <!-- Organic blob shape -->
+  <path d="M64 18 C85 18, 108 34, 108 64 C108 94, 85 110, 64 110 C43 110, 20 94, 20 64 C20 34, 43 18, 64 18 Z" fill="#C8E158"/>
+  <!-- Animated organic feel via path -->
+  <path d="M64 22 C82 20, 104 38, 106 62 C108 86, 88 108, 64 108 C40 108, 22 88, 22 64 C22 40, 46 24, 64 22 Z" fill="#D2E67A" opacity="0.5"/>
+  <!-- Pause bars -->
+  <rect x="50" y="46" width="10" height="36" rx="5" fill="#2A3300"/>
+  <rect x="68" y="46" width="10" height="36" rx="5" fill="#2A3300"/>
+</svg>
