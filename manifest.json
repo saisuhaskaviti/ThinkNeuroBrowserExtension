@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Pause Point",
-  "version": "2.0.0",
+  "name": "Pause Point v3",
+  "version": "3.0.0",
   "description": "Combat mindless scrolling with intentional friction — inspired by Android 17 Pause Point.",
   "permissions": [
     "storage",
@@ -22,30 +22,41 @@
     "open_in_tab": true
   },
   "action": {
-    "default_title": "Pause Point",
+    "default_title": "Pause Point v3",
     "default_popup": "popup.html",
     "default_icon": {
-      "16":  "icon16.png",
-      "48":  "icon48.png",
+      "16": "icon16.png",
+      "48": "icon48.png",
       "128": "icon128.png"
     }
   },
   "icons": {
-    "16":  "icon16.png",
-    "48":  "icon48.png",
+    "16": "icon16.png",
+    "48": "icon48.png",
     "128": "icon128.png"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["timer-overlay.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "timer-overlay.js"
+      ],
       "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["pause.html", "styles.css", "theme.js", "pause.js"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "pause.html",
+        "styles.css",
+        "theme.js",
+        "pause.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }
