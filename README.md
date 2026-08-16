@@ -32,31 +32,79 @@ Pause Point v3 is a lightweight Chrome Extension made for high school and colleg
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Installation & Setup Guide
 
-- **Extension Core:** Manifest V3 API
-- **Logic:** Vanilla JavaScript (Service Workers, Content Scripts)
-- **Chrome APIs:** `storage.local`, `webNavigation`, `tabs`, `history`, `alarms`
-- **Styling:** Tailwind CSS v3
+### Option 1: Quick Install (For End Users)
+
+1. **Download the Extension:**
+   - Download the latest **`PausePoint_v3.zip`** from the [GitHub Releases](https://github.com/saisuhaskaviti/ThinkNeuroBrowserExtension/releases) page (or from the project repository).
+   - Extract/unzip the `.zip` archive to a folder on your computer.
+
+2. **Load into Your Browser:**
+   - Open Google Chrome (or any Chromium browser like Brave, Edge, Arc, or Opera).
+   - In the address bar, go to:
+     - **Chrome:** `chrome://extensions`
+     - **Brave:** `brave://extensions`
+     - **Edge:** `edge://extensions`
+   - In the top-right corner, toggle **Developer mode** to **ON**.
+   - Click the **Load unpacked** button in the top-left corner.
+   - Select the unzipped `ThinkNeuroBrowserExtension` folder.
+
+3. **Start Mindful Browsing!**
+   - Click the extension puzzle icon in your browser toolbar and pin **Pause Point v3**.
+   - Click the Pause Point icon on any site to add or remove it from your pause list.
 
 ---
 
-## 📁 File Structure
+### Option 2: Developer Setup (For Modifying or Contributing)
 
-```text
-ThinkNeuroBrowserExtension/
-├── manifest.json         # Extension settings and permissions
-├── background.js         # Service Worker (Runs in background, handles tab cleanup and alarms)
-├── timer-overlay.js      # Script that adds the floating timer to your page
-├── pause.html            # The HTML for the pause/breathing screen
-├── pause.js              # The logic for the pause screen (delays, animations, tasks)
-├── options.html          # Settings page HTML
-├── options.js            # Settings logic (managing blocklist, math lock, stats)
-├── popup.html            # Toolbar popup HTML
-├── popup.js              # Toolbar logic (quick toggles, showing active timers)
-├── theme.js              # Handles color themes and dark mode
-├── input.css             # Tailwind source CSS
-├── styles.css            # Compiled production CSS
-├── generate-icon.js      # Script to generate the extension icons
-├── icon*.png             # Extension icons (16/48/128px)
-└── PausePoint_v3.zip     # Ready-to-install zip file
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/saisuhaskaviti/ThinkNeuroBrowserExtension.git
+   cd ThinkNeuroBrowserExtension
+   ```
+
+2. **Install Development Dependencies (Optional for Tailwind CSS compilation):**
+   ```bash
+   npm install
+   ```
+
+3. **Building / Customizing Tailwind CSS:**
+   - If you edit `input.css` or add custom Tailwind utility classes to HTML files, re-compile `styles.css` by running:
+     ```bash
+     npx tailwindcss -i ./input.css -o ./styles.css
+     ```
+
+4. **Generating Icons:**
+   - To regenerate icon assets (`icon16.png`, `icon48.png`, `icon128.png`) from `icon.svg`:
+     ```bash
+     node generate-icon.js
+     ```
+
+5. **Reloading Changes:**
+   - Go to `chrome://extensions` and click the **Reload (↺)** icon on the Pause Point v3 card.
+
+---
+
+## ❓ Frequently Asked Questions & Troubleshooting
+
+<details>
+<summary><b>Why didn't a website trigger the pause screen?</b></summary>
+Make sure the domain (e.g., <code>reddit.com</code>) is added to your <b>Paused Sites</b> list. Click the extension toolbar icon to quickly add the current site, or open Settings to manage your full list.
+</details>
+
+<details>
+<summary><b>Why did my timer reset when I closed the tab?</b></summary>
+Pause Point v3 enforces <b>strict tab-bound sessions</b>. Timers are tied exclusively to the specific tab where they were started. Closing a tab invalidates the active session so you aren't tempted to open endless duplicate tabs.
+</details>
+
+<details>
+<summary><b>How do I change the color theme or enable dark mode?</b></summary>
+Click the settings gear in the toolbar popup or open <code>chrome://extensions</code> $\rightarrow$ <b>Extension options</b>. You can toggle Light/Dark mode and choose from 8 Material You color palettes.
+</details>
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. Built with mindful design principles.
