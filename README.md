@@ -1,4 +1,4 @@
-# ⏸️ Pause Point v3
+# ⏸️ Pause Point for Chrome v3
 
 [![Manifest](https://img.shields.io/badge/Manifest-V3-blue.svg)](https://developer.chrome.com/docs/extensions/mv3/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
